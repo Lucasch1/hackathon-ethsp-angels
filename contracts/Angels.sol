@@ -7,8 +7,16 @@ contract AngelsFactory {
     address[] public deployedAngels;
     address public angelTokenAddress;
 
-    function createAngel(string memory _name, uint256 _goal, uint256 _deadline, uint256 _minimumContribution, string memory _description) public {
-        address newAngel = address(new Angels(_name, _goal, _deadline, _minimumContribution, _description, address(this)));
+    function createAngel(
+        string memory _name,
+        uint256 _goal,
+        uint256 _deadline,
+        uint256 _minimumContribution,
+        string memory _description
+    ) public {
+        address newAngel = address(
+            new Angels(_name, _goal, _deadline, _minimumContribution, _description, address(this))
+        );
         deployedAngels.push(newAngel);
     }
 

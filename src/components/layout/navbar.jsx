@@ -1,34 +1,62 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import WalletButton from '../function/walletbutton'
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import WalletButton from '../function/walletbutton';
 
 const Navbar = () => {
-    const [prevScrollPos, setPrevScrollPos] = useState(0)
-    const [visible, setVisible] = useState(true)
-    const [isOpen, setIsOpen] = useState(false)
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
             if (!isOpen) {
-                const currentScrollPos = window.scrollY
-                const scrollingUp = currentScrollPos < prevScrollPos
+                const currentScrollPos = window.scrollY;
+                const scrollingUp = currentScrollPos < prevScrollPos;
 
-                setVisible(scrollingUp || currentScrollPos < 10)
-                setPrevScrollPos(currentScrollPos)
+                setVisible(scrollingUp || currentScrollPos < 10);
+                setPrevScrollPos(currentScrollPos);
             }
-        }
+        };
 
-        window.addEventListener('scroll', handleScroll)
+        window.addEventListener('scroll', handleScroll);
 
-        return () => window.removeEventListener('scroll', handleScroll)
-    }, [prevScrollPos, isOpen])
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [prevScrollPos, isOpen]);
 
     const toggleNavbar = () => {
-        setIsOpen(!isOpen)
-    }
+        setIsOpen(!isOpen);
+    };
+
+    const [showDrop, setShowDrop] = useState({
+        drop1: false,
+        drop2: false,
+        drop3: false,
+        drop4: false,
+    });
+
+    const handleDropClick = (drop) => {
+        // Verificar o estado atual da div clicada
+        const isCurrentlyOpen = showDrop[drop];
+
+        // Fechar todas as divs
+        const updatedShowDrop = {
+            drop1: false,
+            drop2: false,
+            drop3: false,
+            drop4: false,
+        };
+
+        // Abrir a div clicada, se ela estiver fechada
+        if (!isCurrentlyOpen) {
+            updatedShowDrop[drop] = true;
+        }
+
+        // Atualizar o estado
+        setShowDrop(updatedShowDrop);
+    };
 
     return (
         <motion.nav
@@ -54,12 +82,28 @@ const Navbar = () => {
                                 >
                                     Campains
                                 </Link>
-                                <Link
-                                    href="/create"
-                                    className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
+                                <div
+                                    onClick={() => handleDropClick('drop1')}
+                                    className="hover:bg-gray-700 px-3 py-2 flex flex-row justify-center rounded-md text-sm font-medium"
                                 >
-                                    Create Campaign
-                                </Link>
+                                    Create
+                                    {showDrop.drop1 && (
+                                        <div className="absolute flex flex-col items-center rounded-lg mt-12 p-4 bg-slate-700/50 backdrop-blur-xl">
+                                            <Link
+                                                href="/createc"
+                                                className="p-2 hover:bg-gray-700 w-full rounded-lg text-center"
+                                            >
+                                                Create Campaign
+                                            </Link>
+                                            <Link
+                                                href="/createm"
+                                                className="p-2 hover:bg-gray-700 w-full rounded-lg text-center"
+                                            >
+                                                Create GoalGame
+                                            </Link>
+                                        </div>
+                                    )}
+                                </div>
                                 <Link
                                     href="/benefits"
                                     className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
@@ -139,7 +183,7 @@ const Navbar = () => {
                 </motion.div>
             )}
         </motion.nav>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

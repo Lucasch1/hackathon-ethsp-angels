@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import '../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol';
+import '../node_modules/@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol';
+import '../node_modules/@openzeppelin/contracts/access/Ownable.sol';
 
 contract AngelToken is ERC20, ERC20Burnable, Ownable {
     ///Cria variavel para armazenar o enderco atual do contrato AngelsFactory
     address public angelFactoryAddr;
 
     ///Constroi o token com as funcionalidades padrao do openzeppelin
-    constructor() ERC20("AngelToken", "AGT") {
+    constructor() ERC20('AngelToken', 'AGT') {
         _mint(msg.sender, 100000000 * 10 ** decimals());
     }
 
